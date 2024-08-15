@@ -2,13 +2,12 @@ import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
 import { Input } from "./_components/ui/input";
 import { Card, CardContent } from "./_components/ui/card";
-import { Badge } from "./_components/ui/badge";
-import { Avatar, AvatarImage } from "./_components/ui/avatar";
-import { EyeIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import { db } from "./_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
 import { quickSearchOptions } from "./_constants/search";
+import BookingIten from "./_components/booking-item";
 
 const Home = async () => {
   //chamar o bd
@@ -34,8 +33,6 @@ const Home = async () => {
         </Button>
       </div>
 
-      {/* 1:49:05 */}
-
       {/* Busca rapida, pegar as imagens dos icones */}
       <div className="flex mt-6 gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
         {quickSearchOptions.map((option) => (
@@ -60,35 +57,8 @@ const Home = async () => {
           className="object-cover rounded-xl"
         />
       </div>
-
-      <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-        Agendamentos
-      </h2>
-
-      <Card>
-        <CardContent className="flex justify-between p-0">
-          {/* div esquerda */}
-          <div className="flex flex-col gap-2 py-5 pl-5">
-            <Badge className="w-fit">Confirmado</Badge>
-            <h3 className="font-semibold">Corte de cabelo</h3>
-            
-            <div className="flex itens-center gap2">
-              <Avatar className="h-6 w-6">
-                {/*imagem para o avatar */}
-                <AvatarImage src=""/>
-              </Avatar>
-              <p className="text-sm">Barbearia FSW</p>
-            </div>
-          </div>
-
-          {/* div direita */}
-          <div className="flex flex-col items-center justify-center px-5 border-l-2 border-solid">
-            <p className="text-sm">Agosto</p>
-            <p className="text-2xl">05</p>
-            <p className="text-sm">20:00</p>
-          </div>
-        </CardContent>
-      </Card>
+        
+      <BookingIten />
 
       <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
         Recomendados
