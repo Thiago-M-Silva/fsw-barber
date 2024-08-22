@@ -2,30 +2,30 @@ interface QuickSearchOption {
     imageUrl: string
     title: string
 }
-
+// todo: add as urls das imagens
 export const quickSearchOptions: QuickSearchOption[] = [
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Cabelo"
     },
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Barba"
     },
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Acabamento"
     },
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Massagem"
     },
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Sobrancelha"
     },
     {
-        imageUrl: "",
+        imageUrl: "a",
         title:"Hidratação"
     },
 ]

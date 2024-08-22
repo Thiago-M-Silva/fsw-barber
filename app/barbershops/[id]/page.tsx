@@ -1,8 +1,10 @@
 import PhoneItem from "@/app/_components/phone-item"
 import ServiceItem from "@/app/_components/service-item"
+import SidebarSheet from "@/app/_components/sidebar-sheet"
 import { Button } from "@/app/_components/ui/button"
+import { SheetTrigger } from "@/app/_components/ui/sheet"
 import { db } from "@/app/_lib/prisma"
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, SmartphoneIcon, StarIcon } from "lucide-react"
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, Sheet, StarIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -39,9 +41,14 @@ const BarbershopPage = async ({params}: BarbershopPageProps) => {
                     </Link>
                 </Button>
 
-                <Button size="icon" variant="secondary" className="absolute right-4 top-4">
-                    <MenuIcon />
-                </Button>
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <Button size="icon" variant="outline" className="absolute right-4 top-4">
+                            <MenuIcon />
+                        </Button>
+                    </SheetTrigger>
+                    <SidebarSheet/>
+                </Sheet>
             </div>
 
             <div className="p-5">
@@ -53,7 +60,7 @@ const BarbershopPage = async ({params}: BarbershopPageProps) => {
 
                 <div className="flex itens-center gap-1">
                     <StarIcon className="fill-primary text-primary" size={18}/>
-                    <p className="text-sm">5,0 (899 avaliacores)</p>
+                    <p className="text-sm">5,0 (899 avaliacoes)</p>
                 </div>
             </div>
 
