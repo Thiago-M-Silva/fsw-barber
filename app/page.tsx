@@ -1,7 +1,6 @@
 import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
 import { Input } from "./_components/ui/input";
-import { Card, CardContent } from "./_components/ui/card";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import { db } from "./_lib/prisma";
