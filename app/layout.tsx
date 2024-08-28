@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "./_components/ui/toaster";
 import { Card, CardContent } from "./_components/ui/card";
 import FooterItem from "./_components/footer-item";
+import AuthProviders from "./_providers/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        {children}
-        
-        <Toaster/>
-        
-        <FooterItem />
+        <AuthProviders>
+          <div className="flex h-full flex-col">
+            <div className="flex-1">
+              {children}
+            </div>
+          </div>
+          <Toaster />
+          <FooterItem />
+        </AuthProviders>
       </body>
     </html>
   );
