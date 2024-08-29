@@ -6,7 +6,7 @@ import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface BarbershopItemProps{
+interface BarbershopItemProps {
     barbershop: Barbershop
 }
 
@@ -20,17 +20,18 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
                 </div>
 
                 <Badge className="absolute left-2 top-2" variant="secondary">
-                    <StarIcon size={12} className="fill-primary text-primary"/>
+                    <StarIcon size={12} className="fill-primary text-primary" />
                     {/* desafio, implementar sistema de rating */}
                     <p className="text-xs font-semibold">5,0</p>
                 </Badge>
 
+                {/* TEXTO */}
                 <div className="px-1 py-3">
                     <h3 className="font-semibold truncate">{barbershop.name}</h3>
                     <p className="text-sm text-gray-400 truncate">{barbershop.address}</p>
                     <Button variant="secondary" className="mt-3 w-full" asChild>
                         <Link href={`/barbarshops/${barbershop.id}`}>
-                            Reservar 
+                            Reservar
                         </Link>
                     </Button>
                 </div>
@@ -38,5 +39,5 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
         </Card>
     );
 }
- 
+
 export default BarbershopItem;
