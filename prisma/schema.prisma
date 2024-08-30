@@ -14,37 +14,38 @@ datasource db {
 }
 
 model Barbershop {
-  id          String @id @default(uuid())
+  id          String              @id @default(uuid())
   name        String
   address     String
   phones      String[]
   description String
   imageUrl    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
   services    BarbershopService[]
 }
 
-model BarbershopService{
-  id            String @id @default(uuid())
-  name          String
-  description   String
-  imageUrl      String
-  price         Decimal @db.Decimal(10,2)
-  barbershopId  String
-  barbershop    Barbershop @relation(fields: [barbershopId], references: [id])
-  booking       Booking[]
+model BarbershopService {
+  id           String     @id @default(uuid())
+  name         String
+  description  String
+  imageUrl     String
+  price        Decimal    @db.Decimal(10, 2)
+  barbershopId String
+  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
+  booking      Booking[]
 }
 
-model Booking{
-  id          String @id @default(uuid())
+model Booking {
+  id          String            @id @default(uuid())
   userId      String
-  user User @relation(fields: [userId], references: [id])
+  user        User              @relation(fields: [userId], references: [id])
   description String
   imageUrl    String
-  price       Decimal @db.Decimal(10,2)
+  price       Decimal           @db.Decimal(10, 2)
   serviceId   String
-  barbershop BarbershopService @relation(fields: [serviceId], references: [id])
+  date        DateTime
+  barbershop  BarbershopService @relation(fields: [serviceId], references: [id])
 }
 
 model Account {
