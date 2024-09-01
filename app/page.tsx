@@ -8,8 +8,13 @@ import BarbershopItem from "./_components/barbershop-item";
 import { quickSearchOptions } from "./_constants/search";
 import BookingIten from "./_components/booking-item";
 import Search from "./_components/search";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./_lib/auth";
+import { ptBR } from "date-fns/locale";
+import { format } from "date-fns";
 
 const Home = async () => {
+  const session = await getServerSession(authOptions)
   //chamar o bd
   const barbershops = await db.barbershop.findMany({})
   const popularBarbershops = await db.barbershop.findMany({
@@ -17,14 +22,32 @@ const Home = async () => {
       name: "desc"
     }
   })
+  const confirmedBookings = session?.user ? await db.booking.findMany({
+    where: {
+      userId: (session?.user as any).id,
+      date: {
+        gte: new Date()
+      },
+    },
+    include: {
+      service: {
+        include: {
+          barbershop: true
+        }
+      }
+    },
+    orderBy: {
+      date: "asc"
+    }
+  }) : []
   return (
     <div>
       {/* Header */}
       <Header />
 
       <div className="p-5">
-        <h2 >Olá, Usuário</h2>
-        <p>Data atual</p>
+        <h2 >Olá, {session?.user ? session.user.name : "Bem Vindo"}</h2>
+        <p>{format(new Date(), "EEEE, dd, MMMM", { locale: ptBR })}</p>
 
         <div className="mt-6">
           <Search />
@@ -57,7 +80,12 @@ const Home = async () => {
           />
         </div>
 
-        <BookingIten />
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Agendamentos
+        </h2>
+        <div className="flex overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden">
+          {confirmedBookings.map(booking => <BookingIten key={booking.id} booking={booking} />)}
+        </div>
 
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados
