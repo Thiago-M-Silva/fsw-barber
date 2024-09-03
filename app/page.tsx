@@ -12,6 +12,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./_lib/auth";
 import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
+import { getConfirmedBookings } from "./_data/getConfirmedBookings";
 
 const Home = async () => {
   const session = await getServerSession(authOptions)
@@ -22,24 +23,7 @@ const Home = async () => {
       name: "desc"
     }
   })
-  const confirmedBookings = session?.user ? await db.booking.findMany({
-    where: {
-      userId: (session?.user as any).id,
-      date: {
-        gte: new Date()
-      },
-    },
-    include: {
-      service: {
-        include: {
-          barbershop: true
-        }
-      }
-    },
-    orderBy: {
-      date: "asc"
-    }
-  }) : []
+  const confirmedBookings = getConfirmedBookings()
   return (
     <div>
       {/* Header */}
@@ -74,18 +58,22 @@ const Home = async () => {
           {/* pegar a imagem do banner */}
           <Image
             alt="Agende nos melhores com FSW Brber"
-            src=""
+            src="/banner.svg"
             fill
             className="object-cover rounded-xl"
           />
         </div>
 
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-          Agendamentos
-        </h2>
-        <div className="flex overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden">
-          {confirmedBookings.map(booking => <BookingIten key={booking.id} booking={booking} />)}
-        </div>
+        {confirmedBookings.length > 0 && (
+          <>
+            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+              Agendamentos
+            </h2>
+            <div className="flex overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden">
+              {confirmedBookings.map(booking => <BookingIten key={booking.id} booking={JSON.parse(JSON.stringify(booking))} />)}
+            </div>
+          </>
+        )}
 
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados

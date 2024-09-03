@@ -20,6 +20,8 @@ export const authOptions: AuthOptions = {
             } as any
             return session
         }
-    }
+    },
+    //para funcionar em deploy
+    secret: process.env.NEXT_AUTH_SECRET,
 
 }
