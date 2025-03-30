@@ -1,7 +1,7 @@
 import { ptBR } from "date-fns/locale";
 import { format } from "date-fns";
 import { Card, CardContent } from "./ui/card";
-import { Barbershop } from "@prisma/client";
+import { Barbershop, BarbershopService } from "@prisma/client";
 
 interface BookingSumaryProps {
     service: Pick<BarbershopService, "name" | "price">

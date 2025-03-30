@@ -6,7 +6,7 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Booking, Prisma } from "@prisma/client";
 import { format, isFuture } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Sheet } from "lucide-react";
+import { Sheet } from "./ui/sheet";
 import { SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import Image from "next/image";
 import PhoneItem from "./phone-item";
@@ -34,7 +34,7 @@ interface BookingItemProps {
 const BookingIten = ({ booking }: BookingItemProps) => {
   // const {service: {barbershop}, } = booking
   const isConfirmed = isFuture(booking.date)
-  const [isSheetsOpen, setIsSheetsOpen] = useState(false)
+  const [isSheetsOpen, setIsSheetsOpen] = useState<boolean>(false)
   const handleCancelBooking = async () => {
     try {
       await deleteBooking(booking.id)
@@ -46,7 +46,7 @@ const BookingIten = ({ booking }: BookingItemProps) => {
     }
   }
 
-  const handleSheetIsOpenChange = (isOpen: Boolean) => {
+  const handleSheetIsOpenChange = (isOpen: boolean) => {
     setIsSheetsOpen(isOpen)
   }
   return (
@@ -126,7 +126,7 @@ const BookingIten = ({ booking }: BookingItemProps) => {
             </div>
 
             <div className="space-y-3">
-              {booking.service.barbershops.phones.map((phones, index) => {
+              {booking.service.barbershops.phones.map((phones: any, index: any) => {
                 <PhoneItem key={index} phone={phones} />
               })}
             </div>

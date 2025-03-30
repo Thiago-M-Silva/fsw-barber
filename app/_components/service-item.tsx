@@ -4,7 +4,7 @@ import { Barbershop, BarbershopService, Booking } from "@prisma/client";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
-import { Calendar } from "lucide-react";
+import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
 import { useEffect, useMemo, useState } from "react";
 import { addDays, isPast, isToday, set } from "date-fns";
@@ -80,7 +80,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
     const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
     const [selectedTime, setSelectedTime] = useState<string | undefined>(undefined)
-    const [dayBookings, setDayBookings] = useState()
+    const [dayBookings, setDayBookings] = useState<Booking[] | undefined>(undefined)
     const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
 
     useEffect(() => {
@@ -106,7 +106,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
             await createBooking({
                 serviceId: service.id,
                 userId: (data?.user as any).id,
-                date: newDate
+                date: new Date()
             })
             handleBookingSheetIsOpenChange()
             toast.success("Reserva criada com sucesso!", {
@@ -139,7 +139,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     const timeList = useMemo(() => {
         if (!selectedDay) return []
         return getTimeList({
-            bookings: dayBookings,
+            bookings: dayBookings || [],
             selectedDay,
         })
     }, [dayBookings, selectedDay])
@@ -177,7 +177,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                             <Button
                                 variant="secondary"
                                 size="sm"
-                                onClick={handlebookingClick()}
+                                onClick={handlebookingClick}
                             >
                                 Reservar
                             </Button>
@@ -221,7 +221,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
                                 {selectedDay && (
                                     <div className="flex gap-3 border-b border-solid overflow-x-auto p-5 [&::-webkit-scrollbar]:hidden">
-                                        {timeList.length = 0 ? timeList.map((time) => (
+                                        {Number(timeList.length) === 0 ? timeList.map((time) => (
                                             <Button
                                                 key={time}
                                                 variant={selectedTime === time ? "default" : "outline"}
